@@ -5,6 +5,7 @@ import java.util.List;
 import java.util.Scanner;
 
 public class Main {
+    // тестовое сообщение для коммита
     /**
      * Количество потоков выделенное для многопоточных операций
      */
