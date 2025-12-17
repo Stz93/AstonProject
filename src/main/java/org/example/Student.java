@@ -34,7 +34,7 @@ public class Student {
             this.recordBookNumber = recordBookNumber;
             return this;
         }
-//sdfdssdf
+
         public Student build() {
             return new Student(name, averageGrade, recordBookNumber);
         }
