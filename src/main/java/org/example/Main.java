@@ -143,7 +143,7 @@ public class Main {
     /**
      * Обработчик для сортировки коллекции студентов.
      *
-     * @param sortCode
+     * @param sortCode Код стратегии по которой будет проводиться сортировка.
      */
     static void sort(final String sortCode, final List<Student> studentList) {
         // реализовать 4 режима режима. По каждому из полей + сортировка только чётных зачётных книжек.
