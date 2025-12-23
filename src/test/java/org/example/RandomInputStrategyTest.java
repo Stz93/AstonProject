@@ -96,3 +96,4 @@ public class RandomInputStrategyTest {
         System.out.println("  ⚠ Для этого теста нужно модифицировать класс");
     }
 }
+//если тут напишу то можно будет кинуть снова

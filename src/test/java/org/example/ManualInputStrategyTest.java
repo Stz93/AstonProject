@@ -39,3 +39,4 @@ public class ManualInputStrategyTest {
         }
     }
 }
+//если тут напишу то можно будет кинуть снова

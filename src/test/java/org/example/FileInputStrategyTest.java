@@ -254,3 +254,4 @@ public class FileInputStrategyTest {
         }
     }
 }
+//если тут напишу то можно будет кинуть снова

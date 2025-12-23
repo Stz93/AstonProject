@@ -37,3 +37,4 @@ public class InputStrategyFactory {
         }
     }
  }
+//если тут напишу то можно будет кинуть снова

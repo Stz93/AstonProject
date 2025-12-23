@@ -45,3 +45,4 @@ public class FileInputStrategy implements InputStrategy {
                     .build();
     }
 }
+//если тут напишу то можно будет кинуть снова

@@ -114,6 +114,7 @@ public class Main {
             System.out.println("Data loading error: " + e.getMessage());
         }
         }
+
         // реализовать паттерн "Стратегия" по введённому коду стратегии, добавить валидацию этого кода.
       /*  Student.Builder builder = new Student.Builder();
         studentList.add(builder.name("Sasha").averageGrade(0.97).recordBookNumber(100101).build());
