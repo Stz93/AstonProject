@@ -25,22 +25,22 @@ public class FileInputStrategy implements InputStrategy {
     private Student parseLine(String line)
     {
 
-        String[] parts = line.split(",");
-        try{
+            String[] parts = line.split(",");
+            try{
             if (parts.length != 3) {
             } } catch (Exception e) {
-            throw new IllegalArgumentException(e);
-        }
+                throw new IllegalArgumentException(e);
+            }
 
-        String name = parts[0].trim();
-        double averageGrade = Double.parseDouble(parts[1].trim());
-        int recordBookNumber = Integer.parseInt(parts[2].trim());
+            String name = parts[0].trim();
+            double averageGrade = Double.parseDouble(parts[1].trim());
+            int recordBookNumber = Integer.parseInt(parts[2].trim());
 
 
-        return new Student.Builder()
-                .name(name)
-                .averageGrade(averageGrade)
-                .recordBookNumber(recordBookNumber)
-                .build();
+            return new Student.Builder()
+                    .name(name)
+                    .averageGrade(averageGrade)
+                    .recordBookNumber(recordBookNumber)
+                    .build();
     }
 }
