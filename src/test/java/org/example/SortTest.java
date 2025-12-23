@@ -3,6 +3,8 @@ package org.example;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 
+import java.util.List;
+
 class SortTest {
 
     final static Student.Builder builder = new Student.Builder();
@@ -29,9 +31,11 @@ class SortTest {
 
     @Test
     void testSort1() {
-        CustomArrayList<Student> actualList = new CustomArrayList<>();
+        List<Student> actualList = new CustomArrayList<>();
         actualList.addAll(notSortedList);
         Main.sort("1", actualList);
+        //actualList = actualList.stream().sorted((a, b) -> a.name.compareTo(b.name)).toList();
+
         CustomArrayList<Student> expectedList = new CustomArrayList<>();
         expectedList.add(student1);
         expectedList.add(student2);
@@ -48,9 +52,10 @@ class SortTest {
 
     @Test
     void testSort2() {
-        CustomArrayList<Student> actualList = new CustomArrayList<>();
+        List<Student> actualList = new CustomArrayList<>();
         actualList.addAll(notSortedList);
         Main.sort("2", actualList);
+
         CustomArrayList<Student> expectedList = new CustomArrayList<>();
         expectedList.add(student1);
         expectedList.add(student2);
@@ -67,9 +72,10 @@ class SortTest {
 
     @Test
     void testSort3() {
-        CustomArrayList<Student> actualList = new CustomArrayList<>();
+        List<Student> actualList = new CustomArrayList<>();
         actualList.addAll(notSortedList);
         Main.sort("3", actualList);
+
         CustomArrayList<Student> expectedList = new CustomArrayList<>();
         expectedList.add(student1);
         expectedList.add(student2);
@@ -86,9 +92,10 @@ class SortTest {
 
     @Test
     void testSort4() {
-        CustomArrayList<Student> actualList = new CustomArrayList<>();
+        List<Student> actualList = new CustomArrayList<>();
         actualList.addAll(notSortedList);
-        Main.sort("3", actualList);
+        Main.sort("4", actualList);
+
         CustomArrayList<Student> expectedList = new CustomArrayList<>();
         expectedList.add(student1);
         expectedList.add(student7);
