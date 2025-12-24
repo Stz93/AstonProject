@@ -39,7 +39,6 @@ public class Main {
         System.out.println("\t\t2 to output");
         System.out.println("\t\t3 to sort");
         System.out.println("\t\t4 to count entries");
-        System.out.println("\t\t5 to see collection");
         System.out.println("\t\t0 to exit");
 
 
@@ -73,7 +72,21 @@ public class Main {
                 System.out.println("\t\t5 back");
 
                 String sortCode = scanner.next();
-                sort(sortCode, studentList);
+                switch (sortCode) {
+                    case "1", "2", "3", "4":
+                        System.out.println("Unsorted list");
+                        studentList.print();
+                        System.out.println("-------------------------");
+                        sort(sortCode, studentList);
+                        System.out.println("Sorted list");
+                        studentList.print();
+                        break;
+                    case "5" :
+                        break;
+                    default:
+                        System.out.println("incorrect input. Choose from 1 to 5");
+                }
+
                 processRequest(scanner, studentList);
                 return;
             case "4":
@@ -87,9 +100,6 @@ public class Main {
 
                 count(name, averageGrade, recordBookNumber, THREAD_NUMBER);
                 processRequest(scanner, studentList);
-                return;
-            case "5":
-                studentList.print();
                 return;
             case "0":
                 System.out.println("\n\nexit");
@@ -112,7 +122,7 @@ public class Main {
         Student[] studentArray = new Student[4];
         studentArray[0] = builder.name("Sasha").averageGrade(0.97).recordBookNumber(100101).build();
         studentArray[1] = builder.name("Bogdan").averageGrade(0.99).recordBookNumber(888888).build();
-        studentArray[2] = builder.name("Kirill").averageGrade(1.00).recordBookNumber(414144).build();
+        studentArray[2] = builder.name("Kirill").averageGrade(1.00).recordBookNumber(414141).build();
         studentArray[3] = builder.name("Tagir").averageGrade(0.98).recordBookNumber(366663).build();
 
         // Пример заполнения коллекции из стрима:
