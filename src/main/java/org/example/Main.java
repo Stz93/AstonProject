@@ -15,7 +15,7 @@ public class Main {
     static boolean flag = true;
 
     public static void main(String[] args) {
-        List<Student> studentList = new CustomArrayList<>();
+        CustomArrayList<Student> studentList = new CustomArrayList<>();
         Scanner scanner = new Scanner(System.in);
 
         while (flag) {
@@ -34,11 +34,12 @@ public class Main {
      * @throws IllegalStateException выбрасываем исключения для некорректных вводов в консоль.
      */
     public static void processRequest(final Scanner scanner,
-                                      final List<Student> studentList) throws IllegalStateException {
+                                      final CustomArrayList<Student> studentList) throws IllegalStateException {
         System.out.println("\n\nMENU :\t1 to input");
         System.out.println("\t\t2 to output");
         System.out.println("\t\t3 to sort");
         System.out.println("\t\t4 to count entries");
+        System.out.println("\t\t5 to see collection");
         System.out.println("\t\t0 to exit");
 
 
@@ -87,6 +88,9 @@ public class Main {
                 count(name, averageGrade, recordBookNumber, THREAD_NUMBER);
                 processRequest(scanner, studentList);
                 return;
+            case "5":
+                studentList.print();
+                return;
             case "0":
                 System.out.println("\n\nexit");
                 flag = false;
@@ -108,7 +112,7 @@ public class Main {
         Student[] studentArray = new Student[4];
         studentArray[0] = builder.name("Sasha").averageGrade(0.97).recordBookNumber(100101).build();
         studentArray[1] = builder.name("Bogdan").averageGrade(0.99).recordBookNumber(888888).build();
-        studentArray[2] = builder.name("Kirill").averageGrade(1.00).recordBookNumber(414141).build();
+        studentArray[2] = builder.name("Kirill").averageGrade(1.00).recordBookNumber(414144).build();
         studentArray[3] = builder.name("Tagir").averageGrade(0.98).recordBookNumber(366663).build();
 
         // Пример заполнения коллекции из стрима:
