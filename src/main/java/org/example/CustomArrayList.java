@@ -2,6 +2,7 @@ package org.example;
 
 import java.util.AbstractList;
 import java.util.Arrays;
+import java.util.Objects;
 
 public class CustomArrayList<E> extends AbstractList<E> {
 
@@ -74,6 +75,6 @@ public class CustomArrayList<E> extends AbstractList<E> {
     }
 
     public void print() {
-        Arrays.stream(elements).forEach(System.out::println);
+        Arrays.stream(elements).filter(Objects::nonNull).forEach(System.out::println);
     }
 }
