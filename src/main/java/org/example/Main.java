@@ -74,6 +74,7 @@ public class Main {
 
                 String sortCode = scanner.next();
                 sort(sortCode, studentList);
+
                 processRequest(scanner, studentList);
                 return;
             case "4":
@@ -87,9 +88,6 @@ public class Main {
 
                 count(name, averageGrade, recordBookNumber, THREAD_NUMBER);
                 processRequest(scanner, studentList);
-                return;
-            case "5":
-                studentList.print();
                 return;
             case "0":
                 System.out.println("\n\nexit");
@@ -112,7 +110,7 @@ public class Main {
         Student[] studentArray = new Student[4];
         studentArray[0] = builder.name("Sasha").averageGrade(0.97).recordBookNumber(100101).build();
         studentArray[1] = builder.name("Bogdan").averageGrade(0.99).recordBookNumber(888888).build();
-        studentArray[2] = builder.name("Kirill").averageGrade(1.00).recordBookNumber(414144).build();
+        studentArray[2] = builder.name("Kirill").averageGrade(1.00).recordBookNumber(414141).build();
         studentArray[3] = builder.name("Tagir").averageGrade(0.98).recordBookNumber(366663).build();
 
         // Пример заполнения коллекции из стрима:
@@ -149,17 +147,49 @@ public class Main {
      * @param sortCode Код стратегии по которой будет проводиться сортировка.
      */
     static void sort(final String sortCode, final List<Student> studentList) {
+
         // реализовать 4 режима режима. По каждому из полей + сортировка только чётных зачётных книжек.
-        var context = new SortingContext<Student>(getStrategyBySortCode(sortCode));
+        if (!handleSortCode(sortCode)) return;
+
+        var context = new SortingContext<>(getStrategyBySortCode(sortCode));
+
+        System.out.println("Unsorted list");
+        System.out.println(studentList);
+        System.out.println("-------------------------");
+
         context.sort(studentList);
+
+        System.out.println("Sorted list");
+        System.out.println(studentList);
     }
 
+    /**
+     * Получение стратегии сортировки по коду сортировки
+     *
+     * @param sortCode код сортировки
+     */
     static SortStrategy<Student> getStrategyBySortCode(String sortCode) {
         return switch (sortCode) {
             case "1" -> new StudentQuickSortByName();
             case "2" -> new StudentQuickSortByAverageGrade();
             case "3" -> new StudentQuickSortByRecordBookNumber();
             default -> new AdditionalStudentQuickSortByRecordBookNumber();
+        };
+    }
+
+    /**
+     * Проверка корректности введенного кода сортировки
+     *
+     * @param sortCode код стратегии сортировки
+     */
+    static boolean handleSortCode(String sortCode) {
+        return switch (sortCode) {
+            case "1", "2", "3", "4" -> true;
+            case "5" -> false;
+            default -> {
+                System.out.println("Incorrect input. Choose from 1 to 5");
+                yield false;
+            }
         };
     }
 }

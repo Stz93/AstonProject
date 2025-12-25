@@ -1,5 +1,8 @@
 package org.example;
 
+/**
+ * Класс сортировки по имени
+ */
 public class StudentQuickSortByName extends QuickSortStrategy<Student> {
 
     @Override
