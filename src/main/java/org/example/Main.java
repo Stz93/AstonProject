@@ -1,7 +1,7 @@
 package org.example;
 
-import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.LinkedList;
 import java.util.List;
 import java.util.Scanner;
 import java.util.concurrent.*;
@@ -72,7 +72,7 @@ public class Main {
                 System.out.println("\t\t2 averageGrade");
                 System.out.println("\t\t3 recordBookNumber");
                 System.out.println("\t\t4 only even recordBookNumber");
-                System.out.println("\t\t5 back");
+                System.out.println("\t\t0 back");
 
                 String sortCode = scanner.next();
                 sort(sortCode, studentList);
@@ -88,10 +88,17 @@ public class Main {
                 System.out.println("\t\trecordBookNumber : ");
                 String recordBookNumber = scanner.next();
 
-                count(name, averageGrade, recordBookNumber, studentList);
+                try {
+                    Student student = new Student(name, Double.parseDouble(averageGrade), Integer.parseInt(recordBookNumber));
+                    System.out.println(count(student, studentList) + " elements were found for:");
+                    System.out.println(student);
+                } catch (NumberFormatException e) {
+                    System.out.println("Values cant be cast to expected formats");
+                }
+
                 processRequest(scanner, studentList);
                 return;
-            case "5" :
+            case "5":
                 System.out.println(studentList);
                 return;
             case "0":
@@ -100,7 +107,7 @@ public class Main {
                 return;
         }
 
-        throw new IllegalStateException("Wrong action code. Choose 1-4 or 0.");
+        throw new IllegalStateException("Wrong action code. Choose 1-5 or 0.");
     }
 
     /**
@@ -133,27 +140,16 @@ public class Main {
     }
 
     /**
-     * Многопоточный счётчик элементов
+     * Определяет количество вхождений конкретного студента в коллекции.
+     * Делит коллекцию на {@link #NUM_THREADS} частей и обходит их в параллельных потоках.
      *
-     * @param name             {@link Student#name} для поиска
-     * @param averageGrade     {@link  Student#averageGrade} для поиска
-     * @param recordBookNumber {@link Student#recordBookNumber} для поиска
-     * @param studentList      Лист в котором будем искать указанного студента
+     * @param student     студент, которого будем искать
+     * @param studentList лист в котором будем искать
+     * @return количество вхождений
      */
-    static void count(final String name,
-                      final String averageGrade,
-                      final String recordBookNumber,
-                      final List<Student> studentList) {
-        final Student student;
-        try {
-            student = new Student(name, Double.parseDouble(averageGrade), Integer.parseInt(recordBookNumber));
-        } catch (NumberFormatException e) {
-            System.out.println("Values cant be cast to expected formats");
-            return;
-        }
-
+    static int count(final Student student, final List<Student> studentList) {
         ExecutorService executor = Executors.newFixedThreadPool(NUM_THREADS);
-        List<Future<Integer>> futures = new ArrayList<>();
+        List<Future<Integer>> futures = new LinkedList<>();
 
         int bucketSize = studentList.size() / NUM_THREADS;
         for (int i = 0; i < NUM_THREADS; i++) {
@@ -180,9 +176,8 @@ public class Main {
             }
         }
         executor.shutdown();
-        System.out.println(totalCount + " elements were found for:");
-        System.out.println(student);
 
+        return totalCount;
     }
 
     /**
@@ -191,8 +186,6 @@ public class Main {
      * @param sortCode Код стратегии по которой будет проводиться сортировка.
      */
     static void sort(final String sortCode, final List<Student> studentList) {
-
-        // реализовать 4 режима режима. По каждому из полей + сортировка только чётных зачётных книжек.
         if (!handleSortCode(sortCode)) return;
 
         var context = new SortingContext<>(getStrategyBySortCode(sortCode));
@@ -229,9 +222,9 @@ public class Main {
     static boolean handleSortCode(String sortCode) {
         return switch (sortCode) {
             case "1", "2", "3", "4" -> true;
-            case "5" -> false;
+            case "0" -> false;
             default -> {
-                System.out.println("Incorrect input. Choose from 1 to 5");
+                System.out.println("Wrong action code. Choose 1-4 or 0.");
                 yield false;
             }
         };
