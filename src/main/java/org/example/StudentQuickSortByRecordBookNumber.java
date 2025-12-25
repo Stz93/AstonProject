@@ -1,5 +1,9 @@
 package org.example;
 
+
+/**
+ * Класс сортировки по номеру зачетной книжки
+ */
 public class StudentQuickSortByRecordBookNumber extends QuickSortStrategy<Student> {
 
     @Override

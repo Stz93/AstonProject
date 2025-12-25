@@ -1,5 +1,8 @@
 package org.example;
 
+/**
+ * Класс сортировки по среднему баллу
+ */
 public class StudentQuickSortByAverageGrade extends QuickSortStrategy<Student> {
 
     @Override

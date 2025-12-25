@@ -163,6 +163,11 @@ public class Main {
         System.out.println(studentList);
     }
 
+    /**
+     * Получение стратегии сортировки по коду сортировки
+     *
+     * @param sortCode код сортировки
+     */
     static SortStrategy<Student> getStrategyBySortCode(String sortCode) {
         return switch (sortCode) {
             case "1" -> new StudentQuickSortByName();
@@ -172,6 +177,11 @@ public class Main {
         };
     }
 
+    /**
+     * Проверка корректности введенного кода сортировки
+     *
+     * @param sortCode код стратегии сортировки
+     */
     static boolean handleSortCode(String sortCode) {
         return switch (sortCode) {
             case "1", "2", "3", "4" -> true;
