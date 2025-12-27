@@ -1,0 +1,7 @@
+	 name : Alex 	averageGrade : 0.91 	recordBookNumber : 100001
+	 name : George 	averageGrade : 0.97 	recordBookNumber : 100007
+	 name : Daniel 	averageGrade : 0.94 	recordBookNumber : 100004
+	 name : Bob 	averageGrade : 0.92 	recordBookNumber : 100002
+	 name : Emily 	averageGrade : 0.95 	recordBookNumber : 100005
+	 name : Chloe 	averageGrade : 0.93 	recordBookNumber : 100003
+	 name : Freya 	averageGrade : 0.96 	recordBookNumber : 100006

@@ -1,17 +1,15 @@
 package org.example;
 
-import java.util.Arrays;
 import java.util.LinkedList;
-import java.io.IOException;
 import java.util.List;
 import java.util.Scanner;
 import java.util.concurrent.*;
 
 public class Main {
 
-    final static String INPUT_PATH = "src/main/Input.txt";
+    final static String INPUT_PATH = "src/main/resources/Input.txt";
 
-    final static String OUTPUT_PATH = "src/main/Students.txt";
+    final static String OUTPUT_PATH = "src/main/resources/Students.txt";
     /**
      * Количество потоков выделенное для многопоточных операций
      */
@@ -125,7 +123,7 @@ public class Main {
      */
     static void input(final String inputCode, final List<Student> studentList) {
         // реализовать паттерн "Стратегия" по введённому коду стратегии, добавить валидацию этого кода.
-        try{
+        try {
             InputStrategy strategy = InputStrategyFactory.create(inputCode);
             CustomArrayList<Student> newStudents = strategy.loadData();
             studentList.addAll(newStudents);
