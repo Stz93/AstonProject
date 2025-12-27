@@ -2,11 +2,16 @@ package org.example;
 
 import java.util.Arrays;
 import java.util.LinkedList;
+import java.io.IOException;
 import java.util.List;
 import java.util.Scanner;
 import java.util.concurrent.*;
 
 public class Main {
+
+    final static String INPUT_PATH = "C:\\Users\\Tom\\IdeaProjects\\AstonProject\\src\\main\\Input.txt";
+
+    final static String OUTPUT_PATH = "C:\\Users\\Tom\\IdeaProjects\\AstonProject\\src\\main\\Students.txt";
     /**
      * Количество потоков выделенное для многопоточных операций
      */
@@ -51,18 +56,21 @@ public class Main {
             case "1":
                 System.out.println("\n\nYou have chosen to input");
                 System.out.println("Which input method should be selected?");
-                System.out.println("\t\t1 from File : " + "*File directory*");
+                System.out.println("\t\t1 from File : " + INPUT_PATH);
                 System.out.println("\t\t2 random");
                 System.out.println("\t\t3 manually");
-                System.out.println("\t\t4 back");
 
                 String inputCode = scanner.next();
                 input(inputCode, studentList);
                 processRequest(scanner, studentList);
                 return;
             case "2":
-                System.out.println("\n\nYou have chosen to write data in file : *File directory*");
-                write();
+                System.out.println("\n\nYou have chosen to write data in file : " + OUTPUT_PATH);
+                System.out.println("Which write method should be selected?");
+                System.out.println("\t\t1 append file");
+                System.out.println("\t\t2 rewrite file");
+                String writeCode = scanner.next();
+                write(writeCode, studentList);
                 processRequest(scanner, studentList);
                 return;
             case "3":
@@ -117,26 +125,63 @@ public class Main {
      */
     static void input(final String inputCode, final List<Student> studentList) {
         // реализовать паттерн "Стратегия" по введённому коду стратегии, добавить валидацию этого кода.
-        Student.Builder builder = new Student.Builder();
-
-        Student[] studentArray = new Student[6];
-        studentArray[0] = builder.name("Sasha").averageGrade(0.97).recordBookNumber(100101).build();
-        studentArray[1] = builder.name("Bogdan").averageGrade(0.99).recordBookNumber(888888).build();
-        studentArray[2] = builder.name("Kirill").averageGrade(1.00).recordBookNumber(414141).build();
-        studentArray[3] = builder.name("Tagir").averageGrade(0.98).recordBookNumber(366663).build();
-        studentArray[4] = builder.name("Kirill").averageGrade(1.00).recordBookNumber(414144).build();
-        studentArray[5] = builder.name("Kirill").averageGrade(1.00).recordBookNumber(414144).build();
-
-        // Пример заполнения коллекции из стрима:
-        Arrays.stream(studentArray).forEach(studentList::add);
+        try{
+            InputStrategy strategy = InputStrategyFactory.create(inputCode);
+            CustomArrayList<Student> newStudents = strategy.loadData();
+            studentList.addAll(newStudents);
+            System.out.println("Successfully added " + newStudents.size() + " students");
+            System.out.println("Total students in collection: " + studentList.size());
+        } catch (IllegalArgumentException e) {
+            System.out.println("Error: " + e.getMessage());
+        }
     }
 
     /**
      * Обработчик для записи данных из коллекции в файл.
      */
-    static void write() {
-        // реализовать паттерн "Стратегия" по введённому коду стратегии, добавить валидацию этого кода.
-        System.out.println("массив записан");
+    static void write(final String writeCode, final List<Student> studentList) {
+
+
+        System.out.println("Writing to file");
+        System.out.println("File: " + OUTPUT_PATH);
+
+        if (studentList == null) {
+            System.out.println("Error: student collection is null");
+            return;
+        }
+
+        if (studentList.isEmpty()) {
+            System.out.println("No data to write. Please load students first.");
+            return;
+        }
+
+        try {
+            WriteStrategy strategy = WriteStrategyFactory.create(writeCode);
+
+            CustomArrayList<Student> customList = new CustomArrayList<>();
+            for (Student student : studentList) {
+                if (student != null) {
+                    customList.add(student);
+                }
+            }
+
+            strategy.writeToFile(OUTPUT_PATH, customList);
+
+            System.out.println("Success");
+            System.out.println("Students written: " + studentList.size());
+            System.out.println("File: " + OUTPUT_PATH);
+
+        } catch (IllegalArgumentException e) {
+            System.out.println("Error: " + e.getMessage());
+            System.out.println("Available write codes:");
+            System.out.println("  1 - append to file");
+            System.out.println("  2 - rewrite file");
+        } catch (DataLoadingException e) {
+            System.out.println("Error: " + e.getMessage());
+            System.out.println("Check file permissions for " + OUTPUT_PATH);
+        }
+
+        System.out.println("Array written");
     }
 
     /**
